@@ -1,0 +1,104 @@
+{
+  "contractName": "TweetServices",
+  "abi": [],
+  "metadata": "{\"compiler\":{\"version\":\"0.4.24+commit.e67f0147\"},\"language\":\"Solidity\",\"output\":{\"abi\":[],\"devdoc\":{\"methods\":{}},\"userdoc\":{\"methods\":{}}},\"settings\":{\"compilationTarget\":{\"/Users/quanth/Documents/DecentralizedTwitter/contracts/TweetServices/TweetServices.sol\":\"TweetServices\"},\"evmVersion\":\"byzantium\",\"libraries\":{},\"optimizer\":{\"enabled\":false,\"runs\":200},\"remappings\":[]},\"sources\":{\"/Users/quanth/Documents/DecentralizedTwitter/contracts/TweetServices/TweetServices.sol\":{\"keccak256\":\"0x903213154d35b07121a8c44f2278395a5cdcd09cd2cbf2e1106d39caee3b06b8\",\"urls\":[\"bzzr://283583c62b1edaa07a425a5e894cfa5f921e2d80c19f81b6aa77cc481b776fb9\"]}},\"version\":1}",
+  "bytecode": "0x6080604052348015600f57600080fd5b50603580601d6000396000f3006080604052600080fd00a165627a7a723058204c7630b70a31daa75268df702b59ce7b8134aff1ba0a1372806b67d573651e6f0029",
+  "deployedBytecode": "0x6080604052600080fd00a165627a7a723058204c7630b70a31daa75268df702b59ce7b8134aff1ba0a1372806b67d573651e6f0029",
+  "sourceMap": "26:31:9:-;;;;8:9:-1;5:2;;;30:1;27;20:12;5:2;26:31:9;;;;;;;",
+  "deployedSourceMap": "26:31:9:-;;;;;",
+  "source": "pragma solidity ^0.4.24;\n\ncontract TweetServices {\n    \n}",
+  "sourcePath": "/Users/quanth/Documents/DecentralizedTwitter/contracts/TweetServices/TweetServices.sol",
+  "ast": {
+    "absolutePath": "/Users/quanth/Documents/DecentralizedTwitter/contracts/TweetServices/TweetServices.sol",
+    "exportedSymbols": {
+      "TweetServices": [
+        2119
+      ]
+    },
+    "id": 2120,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2118,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:9"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 2119,
+        "linearizedBaseContracts": [
+          2119
+        ],
+        "name": "TweetServices",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 2120,
+        "src": "26:31:9"
+      }
+    ],
+    "src": "0:57:9"
+  },
+  "legacyAST": {
+    "absolutePath": "/Users/quanth/Documents/DecentralizedTwitter/contracts/TweetServices/TweetServices.sol",
+    "exportedSymbols": {
+      "TweetServices": [
+        2119
+      ]
+    },
+    "id": 2120,
+    "nodeType": "SourceUnit",
+    "nodes": [
+      {
+        "id": 2118,
+        "literals": [
+          "solidity",
+          "^",
+          "0.4",
+          ".24"
+        ],
+        "nodeType": "PragmaDirective",
+        "src": "0:24:9"
+      },
+      {
+        "baseContracts": [],
+        "contractDependencies": [],
+        "contractKind": "contract",
+        "documentation": null,
+        "fullyImplemented": true,
+        "id": 2119,
+        "linearizedBaseContracts": [
+          2119
+        ],
+        "name": "TweetServices",
+        "nodeType": "ContractDefinition",
+        "nodes": [],
+        "scope": 2120,
+        "src": "26:31:9"
+      }
+    ],
+    "src": "0:57:9"
+  },
+  "compiler": {
+    "name": "solc",
+    "version": "0.4.24+commit.e67f0147.Emscripten.clang"
+  },
+  "networks": {},
+  "schemaVersion": "3.0.16",
+  "updatedAt": "2019-11-25T14:38:12.798Z",
+  "devdoc": {
+    "methods": {}
+  },
+  "userdoc": {
+    "methods": {}
+  }
+}
