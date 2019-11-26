@@ -80,7 +80,7 @@ contract TweetServices is Ownable, ERC20Mintable {
             validTweet(tweetOwner, tweetId)
             public returns(bool) 
     {
-        tweet.
+        
     }
 
 

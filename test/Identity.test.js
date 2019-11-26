@@ -95,17 +95,17 @@ contract('IdentityRegistry', function (accounts) {
 
         it("User1 now had ClaimSigned by Twitter Issuer, can use register services on IdentityRegistry contract", async function() {
 
-           const registerData_user1 = getEncodedCall(identityRegistry, 'registerIdentity', [0, user1_Identity.address]);
+           const registerData_user1 = getEncodedCall(identityRegistry, 'registerIdentity', [user1_Identity.address]);
            await  user1_Identity.execute(identityRegistry.address, 0, registerData_user1, { from: user1_EOA});
-           const res = await identityRegistry.identity.call(0); // 0 is id of user1_Identity on identityRegistry
-           assert.equal(res.toString(), user1_Identity.address.toString())
+           const res = await identityRegistry.identity.call(user1_Identity.address); // 0 is id of user1_Identity on identityRegistry
+            assert.equal(res, true)
         });
 
          it("User1 and User2 now had ClaimSigned by Twitter Issuer, can use register services on IdentityRegistry contract", async function() {
-           const registerData_user2 = getEncodedCall(identityRegistry, 'registerIdentity', [1, user2_Identity.address]);
+           const registerData_user2 = getEncodedCall(identityRegistry, 'registerIdentity', [user2_Identity.address]);
            await user2_Identity.execute(identityRegistry.address, 0, registerData_user2, { from: user2_EOA});
-           const res = await identityRegistry.identity.call(1); // 1 is id of user2_Identity on identityRegistry
-           assert.equal(res.toString(), user2_Identity.address.toString())
+           const res = await identityRegistry.identity.call(user2_Identity.address); // 1 is id of user2_Identity on identityRegistry
+           assert.equal(res, true)
         });
     })  
 });
