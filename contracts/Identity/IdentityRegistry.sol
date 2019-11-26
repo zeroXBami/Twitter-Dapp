@@ -9,15 +9,15 @@ import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 contract IdentityRegistry is Ownable, ClaimVerifier {
 
     //mapping between a user id and the corresponding identity contract
-    mapping(uint256 => ClaimHolder) public identity;
-
+    mapping(address => bool) public identity;
+    
     //Array storing trusted claim types of the services
     uint256[] public claimTypes;
 
     ClaimTypesRegistry public typesRegistry;
 
-    event IdentityRegistered(ClaimHolder indexed identity, uint256 indexed index);
-    event IdentityRemoved(ClaimHolder indexed identity, uint256 indexed index);
+    event IdentityRegistered(ClaimHolder indexed identity, uint256 indexed time);
+    event IdentityRemoved(ClaimHolder indexed identity, uint256 indexed time);
     event ClaimTypesRegistrySet(address indexed _claimTypesRegistry);
     event TrustedIssuersRegistrySet(address indexed _trustedIssuersRegistry);
     /**
@@ -44,26 +44,25 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
 
     /**
     * @notice Register an identity contract for user account
-    * @param index an user id, maybe it is a phone number, id card,...
     * @param _identity The address of the user's identity contract (ClaimHolder)
     * @return true or false
     */
-    function registerIdentity(uint256 index, ClaimHolder _identity) isValidIdentity(_identity) public returns (bool) {
-        require(identity[index] == address(0));
-        identity[index] = _identity;
-        emit IdentityRegistered(_identity, index);
+    function registerIdentity(ClaimHolder _identity) isValidIdentity(_identity) public returns (bool) {
+        require(identity[_identity] == false);
+        identity[_identity] = true;
+        emit IdentityRegistered(_identity, now);
         return true;
     }
 
     /**
     * @notice Remove an identity contract
-    * @param index index an user id that will be remove
+    * @param _identity is an identity contract of user
     * @return true or false
      */
-    function removeIdentity(uint256 index) onlyOwner public returns (bool) {
-        require(identity[index] != address(0));
-        emit IdentityRemoved(identity[index], index);
-        delete identity[index];
+    function removeIdentity(ClaimHolder _identity) onlyOwner public returns (bool) {
+        require(identity[_identity] == true);
+        emit IdentityRemoved(_identity, now);
+        delete identity[_identity];
         return true;
     }
 
@@ -100,7 +99,7 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
         return false;
     }
 
-    function isValidUser(uint256 index, ClaimHolder _identity) public returns (bool){
-        if()
+    function isValidUser(ClaimHolder _identity) public returns (bool){
+        return identity[_identity];
     }
-}
+} 

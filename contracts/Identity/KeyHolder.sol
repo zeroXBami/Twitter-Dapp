@@ -105,7 +105,7 @@ contract KeyHolder is ERC725 {
 
         if (_approve == true) {
             executions[_id].approved = true;
-            success = executions[_id].to.call.value(executions[_id].value)(executions[_id].data, 0);
+            success = executeCall(executions[_id].to, executions[_id].value, executions[_id].data);
             if (success) {
                 executions[_id].executed = true;
                 emit Executed(_id, executions[_id].to, executions[_id].value, executions[_id].data);
@@ -134,6 +134,16 @@ contract KeyHolder is ERC725 {
 
         executionNonce++;
         return executionNonce - 1;
+    }
+
+    function executeCall(address to, uint256 value, bytes memory data)
+        internal
+        returns (bool success)
+    {
+        // solium-disable-next-line security/no-inline-assembly
+        assembly {
+            success := call(gas, to, value, add(data, 0x20), mload(data), 0, 0)
+        }
     }
 
     function removeKey(bytes32 _key) public returns (bool success) {
