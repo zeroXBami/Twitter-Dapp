@@ -44,7 +44,7 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
 
     /**
     * @notice Register an identity contract for user account
-    * @param index an user id
+    * @param index an user id, maybe it is a phone number, id card,...
     * @param _identity The address of the user's identity contract (ClaimHolder)
     * @return true or false
     */
@@ -98,5 +98,9 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
             }
         }
         return false;
+    }
+
+    function isValidUser(uint256 index, ClaimHolder _identity) public returns (bool){
+        if()
     }
 }
