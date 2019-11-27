@@ -29,10 +29,8 @@ contract KeyHolder is ERC725 {
     }
 
     /**
-    * @notice Implementation of the getKey function from the ERC-725 standard
-    *
+    * @dev Implementation of the getKey function from the ERC-725 standard
     * @param _key The public key.  for non-hex and long keys, its the Keccak256 hash of the key
-    *
     * @return Returns the full key data, if present in the identity.
     */
 
@@ -41,10 +39,8 @@ contract KeyHolder is ERC725 {
     }
 
     /**
-    * @notice gets the purpose of a key
-    *
+    * @dev gets the purpose of a key
     * @param _key The public key.  for non-hex and long keys, its the Keccak256 hash of the key
-    *
     * @return Returns the purpose of the specified key
     */
 
@@ -53,10 +49,8 @@ contract KeyHolder is ERC725 {
     }
 
     /**
-    * @notice gets all the keys with a specific purpose from an identity
-    *
+    * @dev gets all the keys with a specific purpose from an identity
     * @param _purpose a uint256[] Array of the key types, like 1 = MANAGEMENT, 2 = ACTION, 3 = CLAIM, 4 = ENCRYPTION
-    *
     * @return Returns an array of public key bytes32 hold by this identity and having the specified purpose
     */
 
@@ -65,7 +59,7 @@ contract KeyHolder is ERC725 {
     }
 
     /**
-    * @notice implementation of the addKey function of the ERC-725 standard
+    * @dev implementation of the addKey function of the ERC-725 standard
     * Adds a _key to the identity. The _purpose specifies the purpose of key. Initially we propose four purposes:
     * 1: MANAGEMENT keys, which can manage the identity
     * 2: ACTION keys, which perform actions in this identities name (signing, logins, transactions, etc.)
@@ -98,6 +92,11 @@ contract KeyHolder is ERC725 {
         return true;
     }
 
+    /**
+    * @dev implement approve function to excecute contract call with data
+    * @param _id is an id of execute request
+    * @param _approve boolen of approve to execute this request or not
+     */
     function approve(uint256 _id, bool _approve) public returns (bool success) {
         require(keyHasPurpose(keccak256(msg.sender), 2), "Sender does not have action key");
 
@@ -120,6 +119,12 @@ contract KeyHolder is ERC725 {
         return true;
     }
 
+    /**
+    * @dev implement execute function to create execute request
+    * @param _to is a contract address will be call 
+    * @param _value is value will be forward to contract _to
+    * @param _data is data will be execute on contract _to
+     */
     function execute(address _to, uint256 _value, bytes memory _data) public payable returns (uint256 executionId) {
         require(!executions[executionNonce].executed, "Already executed");
         executions[executionNonce].to = _to;
@@ -136,6 +141,12 @@ contract KeyHolder is ERC725 {
         return executionNonce - 1;
     }
 
+    /**
+    * @dev implement contract call by assemly code
+    * @param to is a contract address will be call 
+    * @param value is value will be forward to contract _to
+    * @param data is data will be execute on contract _to
+     */
     function executeCall(address to, uint256 value, bytes memory data)
         internal
         returns (bool success)
@@ -146,16 +157,16 @@ contract KeyHolder is ERC725 {
         }
     }
 
+     /**
+    * @dev implement function to remove key
+    * @param _key is a key will be removed from key list
+     */
     function removeKey(bytes32 _key) public returns (bool success) {
         require(keys[_key].key == _key, "No such key");
         if (msg.sender != address(this)) {
             require(keyHasPurpose(keccak256(msg.sender), 1), "Sender does not have management key"); // Sender has MANAGEMENT_KEY
         }
         emit KeyRemoved(keys[_key].key, keys[_key].purpose, keys[_key].keyType);
-
-        /* uint index;
-        (index,) = keysByPurpose[keys[_key].purpose.indexOf(_key);
-        keysByPurpose[keys[_key].purpose.removeByIndex(index); */
 
         bytes32[] keyList = keysByPurpose[keys[_key].purpose];
 
@@ -172,6 +183,11 @@ contract KeyHolder is ERC725 {
         return true;
     }
 
+     /**
+    * @dev implement function return key has purpose or not
+    * @param _key is a given key 
+    * @param _purpose is purpose to check
+     */
     function keyHasPurpose(bytes32 _key, uint256 _purpose) public view returns (bool result) {
         bool isThere;
         if (keys[_key].key == 0) return false;

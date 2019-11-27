@@ -11,14 +11,14 @@ contract TrustedIssuersRegistry is Ownable {
     mapping(address => bool) public isTrustedIssuers;
 
     //Array stores the trusted issuer indexes
-    uint[] indexes;
+    uint[] public indexes;
 
     event TrustedIssuerAdded(uint indexed index, ClaimHolder indexed trustedIssuer);
     event TrustedIssuerRemoved(uint indexed ndex, ClaimHolder indexed trustedIssuer);
     event TrustedIssuerUpdated(uint indexed index, ClaimHolder indexed oldTrustedIssuer, ClaimHolder indexed newTrustedIssuer);
 
     /**
-    * @notice Add the identity contract of a trusted claim issuer corresiponding
+    * @dev Add the identity contract of a trusted claim issuer corresiponding
     * to the index provided.
     * Requires the index to be greater than zero.
     * Requires that an identity contract doesnt already exist corresponding to the index.
@@ -42,7 +42,7 @@ contract TrustedIssuersRegistry is Ownable {
     }
 
     /**
-    * @notice Removes the identity contract of a trusted claim issuer corresponding
+    * @dev Removes the identity contract of a trusted claim issuer corresponding
     * to the index provided.
     * Requires the index to be greater than zero.
     * Requires that an identity contract exists corresponding to the index.
@@ -69,7 +69,7 @@ contract TrustedIssuersRegistry is Ownable {
     }
 
     /**
-    * @notice Function for getting all the trusted claim issuer indexes stored.
+    * @dev Function for getting all the trusted claim issuer indexes stored.
     * @return array of indexes of all the trusted claim issuer indexes stored.
     */
     function getTrustedIssuers() public view returns (uint[] memory) {
@@ -77,7 +77,7 @@ contract TrustedIssuersRegistry is Ownable {
     }
 
     /**
-    * @notice Function for getting the trusted claim issuer's
+    * @dev Function for getting the trusted claim issuer's
     * identity contract address corresponding to the index provided.
     * Requires the provided index to have an identity contract stored.
     * Only owner can call.
@@ -93,7 +93,7 @@ contract TrustedIssuersRegistry is Ownable {
     }
 
     /**
-    * @notice Updates the identity contract of a trusted claim issuer corresponding
+    * @dev Updates the identity contract of a trusted claim issuer corresponding
     * to the index provided.
     * Requires the index to be greater than zero.
     * Requires that an identity contract already exists corresponding to the provided index.
@@ -115,7 +115,7 @@ contract TrustedIssuersRegistry is Ownable {
 
 
     /**
-    * @notice Check the given address is identity contract of a trusted claim issuer or not
+    * @dev Check the given address is identity contract of a trusted claim issuer or not
     * @param _trustedIssuerIdentity The given address will be check
     * @return true or false
     */

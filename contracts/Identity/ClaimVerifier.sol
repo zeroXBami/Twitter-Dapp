@@ -5,15 +5,15 @@ import "./TrustedIssuersRegistry.sol";
 
 contract ClaimVerifier{
 
-    uint[] issuerIndexes;
-    ClaimHolder trustedClaimHolder;
-    TrustedIssuersRegistry issuersRegistry;
+    uint[] public issuerIndexes;
+    ClaimHolder public trustedClaimHolder;
+    TrustedIssuersRegistry public issuersRegistry;
 
     event ClaimValid(ClaimHolder _identity, uint256 claimType);
     event ClaimInvalid(ClaimHolder _identity, uint256 claimType);
 
     /**
-    * @notice Check valid or invalid of given claim by ClaimHolder
+    * @dev Check valid or invalid of given claim by ClaimHolder
     * @param _identity ClaimHolder contract address
     * @param claimType type of given claim by ClaimHolder
     * @return true or false
@@ -59,7 +59,7 @@ contract ClaimVerifier{
     }
 
     /**
-    * @notice Get address of signed data
+    * @dev Get address of signed data
     * @param sig signed data in bytes32
     * @param dataHash hash of data in bytes32
     * @return address of signed data

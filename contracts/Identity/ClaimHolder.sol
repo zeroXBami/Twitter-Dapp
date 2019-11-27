@@ -9,7 +9,7 @@ contract ClaimHolder is KeyHolder, ERC735 {
     mapping (uint256 => bytes32[]) claimsByType;
 
  /**
-    * @notice Implementation of the addClaim function from the ERC-735 standard
+    * @dev Implementation of the addClaim function from the ERC-735 standard
     *  Require that the msg.sender has claim signer key.
     *
     * @param _claimType The type of claim
@@ -67,7 +67,7 @@ contract ClaimHolder is KeyHolder, ERC735 {
     }
 
  /**
-    * @notice Implementation of the removeClaim function from the ERC-735 standard
+    * @dev Implementation of the removeClaim function from the ERC-735 standard
     * Require that the msg.sender has management key.
     * Can only be removed by the claim issuer, or the claim holder itself.
     *
@@ -108,10 +108,8 @@ contract ClaimHolder is KeyHolder, ERC735 {
     }
 
 /**
-    * @notice Implementation of the getClaim function from the ERC-735 standard.
-    *
+    * @dev Implementation of the getClaim function from the ERC-735 standard.
     * @param _claimId The identity of the claim i.e. keccak256(address issuer_address + uint256 claimType)
-    *
     * @return Returns all the parameters of the claim for the specified _claimId (claimType, scheme, signature, issuer, data, uri) .
     */
 
@@ -138,11 +136,9 @@ contract ClaimHolder is KeyHolder, ERC735 {
     }
 
 /**
-    * @notice Implementation of the getClaimIdsByTopic function from the ERC-735 standard.
+    * @dev Implementation of the getClaimIdsByTopic function from the ERC-735 standard.
     * used to get all the claims from the specified claimType
-    *
     * @param _claimType The identity of the claim i.e. keccak256(address issuer_address + uint256 claimType)
-    *
     * @return Returns an array of claim IDs by claimType.
     */
 

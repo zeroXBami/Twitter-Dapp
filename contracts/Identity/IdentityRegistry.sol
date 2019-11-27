@@ -8,10 +8,14 @@ import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
 
 contract IdentityRegistry is Ownable, ClaimVerifier {
 
-    //mapping between a user id and the corresponding identity contract
+    /**
+    @dev identity is a mapping between an user identity contract to bool
+    */
     mapping(address => bool) public identity;
     
-    //Array storing trusted claim types of the services
+    /**
+    @dev claimTypes is an array of trusted ClaimTypes
+    */
     uint256[] public claimTypes;
 
     ClaimTypesRegistry public typesRegistry;
@@ -21,7 +25,7 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
     event ClaimTypesRegistrySet(address indexed _claimTypesRegistry);
     event TrustedIssuersRegistrySet(address indexed _trustedIssuersRegistry);
     /**
-    * @notice check valid identity (KYC)
+    * @dev check valid identity (KYC)
     * @param _identityContract an address of user identity contract (ClaimHolder)
      */
     modifier isValidIdentity(ClaimHolder _identityContract) {
@@ -31,7 +35,7 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
     }
 
      /**
-    * @notice constructor of the contract
+    * @dev constructor of the contract
     * @param _trustedIssuersRegistry the address of TrustedIssuerRegistry
     * @param _claimTypesRegistry the address of ClaimTypeRegistry
     */
@@ -43,7 +47,7 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
     }
 
     /**
-    * @notice Register an identity contract for user account
+    * @dev Register an identity contract for user account
     * @param _identity The address of the user's identity contract (ClaimHolder)
     * @return true or false
     */
@@ -55,7 +59,7 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
     }
 
     /**
-    * @notice Remove an identity contract
+    * @dev Remove an identity contract
     * @param _identity is an identity contract of user
     * @return true or false
      */
@@ -67,7 +71,7 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
     }
 
     /**
-    * @notice Set ClaimTypeRegistry
+    * @dev Set ClaimTypeRegistry
     * @param _claimTypesRegistry an address of ClaimTypeRegistry
      */
     function setClaimTypesRegistry(address _claimTypesRegistry) public onlyOwner {
@@ -76,7 +80,7 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
     }
 
     /**
-    * @notice Set TrustedIssuerRegistry
+    * @dev Set TrustedIssuerRegistry
     * @param _trustedIssuersRegistry an address of TrustedIssuerRegistry
      */
     function setTrustedIssuerRegistry(address _trustedIssuersRegistry) public onlyOwner {
@@ -85,7 +89,7 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
     }
 
     /**
-    * @notice Check valid identity contract
+    * @dev Check valid identity contract
     * @param _identity an address of user
     * @return true or false
      */

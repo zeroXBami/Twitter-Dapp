@@ -10,9 +10,8 @@ contract ClaimTypesRegistry is Ownable {
     event claimTypeRemoved(uint256 indexed claimType);
 
     /**
-    * @notice Add a trusted claim type (For example: KYC=1, AML=2).
+    * @dev Add a trusted claim type (For example: KYC=1, AML=2).
     * Only owner can call.
-    *
     * @param claimType The uint256 of claim type
     */
     function addClaimType(uint256 claimType) public onlyOwner {
@@ -25,9 +24,8 @@ contract ClaimTypesRegistry is Ownable {
     }
 
     /**
-    * @notice Remove a trusted claim type (For example: KYC=1, AML=2).
+    * @dev Remove a trusted claim type (For example: KYC=1, AML=2).
     * Only owner can call.
-    *
     * @param claimType The uint256 of claim type
     */
     function removeClaimType(uint256 claimType) public onlyOwner {
@@ -45,8 +43,7 @@ contract ClaimTypesRegistry is Ownable {
     }
 
     /**
-    * @notice Get the trusted claim types for the identity services
-    *
+    * @dev Get the trusted claim types for the identity services
     * @return Array of trusted claim types
     */
     function getClaimTypes() public view  returns (uint256[] memory) {
