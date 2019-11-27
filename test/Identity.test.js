@@ -6,8 +6,9 @@ const { expect } = require('chai');
 
 const ClaimHolder =  artifacts.require('../contracts/ClaimHolder.sol');
 const TrustedIssuersRegistry = artifacts.require('../contracts/TrustedIssuersRegistry.sol');
-const ClaimTypesRegistry = artifacts.require('../contracts/ClaimTypesRegistry');
-const IdentityRegistry = artifacts.require('../contracts/IdentityRegistry');
+const ClaimTypesRegistry = artifacts.require('../contracts/ClaimTypesRegistry.sol');
+const IdentityRegistry = artifacts.require('../contracts/IdentityRegistry.sol');
+const TweetServices = artifacts.require('../contracts/TweetServices.sol');
 
 function getEncodedCall(instance, method, params = []) {
   const contract = new web3.eth.Contract(instance.abi)
@@ -15,7 +16,7 @@ function getEncodedCall(instance, method, params = []) {
 }
 
 contract('IdentityRegistry', function (accounts) {
-    let identityRegistry, claimTypeRegistry, trustedIssuerRegistry;
+    let identityRegistry, claimTypeRegistry, trustedIssuerRegistry, tweetServices;
     let addrZero = constants.ZERO_ADDRESS;
     let issuer_EOA = accounts[0];
     let signer_key = web3.utils.keccak256(accounts[4]);
@@ -88,7 +89,7 @@ contract('IdentityRegistry', function (accounts) {
                                 'https://decentralized-twitter.com', { from: user2_EOA}) // uri for link, ipfs
         });
 
-        it("Identity Services Provider add trusted ClaimType & Trusted Issuerr", async function () {
+        it("Identity Services Provider add trusted ClaimType & Trusted Issuer", async function () {
             await trustedIssuerRegistry.addTrustedIssuer(issuer_identity.address, 1,  {from: services_EOA});
             await claimTypeRegistry.addClaimType(1, {from: services_EOA});
         });
@@ -101,11 +102,35 @@ contract('IdentityRegistry', function (accounts) {
             assert.equal(res, true)
         });
 
-         it("User1 and User2 now had ClaimSigned by Twitter Issuer, can use register services on IdentityRegistry contract", async function() {
+        it("User1 and User2 now had ClaimSigned by Twitter Issuer, can use register services on IdentityRegistry contract", async function() {
            const registerData_user2 = getEncodedCall(identityRegistry, 'registerIdentity', [user2_Identity.address]);
            await user2_Identity.execute(identityRegistry.address, 0, registerData_user2, { from: user2_EOA});
            const res = await identityRegistry.identity.call(user2_Identity.address); // 1 is id of user2_Identity on identityRegistry
            assert.equal(res, true)
         });
     })  
+
+    describe("Tweet Services", function () {
+        it("Deploy TweetServices", async function() {
+            tweetServices = await TweetServices.new(identityRegistry.address, { from: services_EOA});
+            
+        });
+
+        it("User 1 post new tweet", async function() {
+            const content = web3.utils.asciiToHex("This is my first tweet on Decentralized Twitter app");
+            const tweetData = getEncodedCall(tweetServices, 'tweetNewPost', [content]);
+            await user1_Identity.execute(tweetServices.address, 0, tweetData, {from: user1_EOA});
+        });
+
+        it("User 2 retweet from User 1", async function() {
+            const reTweetData = getEncodedCall(tweetServices, 'reTweet', [user1_Identity.address, 1]);
+            await user2_Identity.execute(tweetServices.address, 0, reTweetData, {from: user2_EOA});
+        });
+
+        it("User 1 now have 1 token from re-tweet action of User 2", async function () {
+            const user1_tokenBalance = await tweetServices.balanceOf.call(user1_Identity.address);
+            assert.isTrue(user1_tokenBalance.toNumber() == 1);
+        })
+
+    });
 });
