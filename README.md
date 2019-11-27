@@ -1,5 +1,8 @@
 # Twitter-Dapp
 This is a PoC Smart contract system of Decentralized Twitter Application, based on ERC725/735 and ERC20.
+
+## Contract Architecture
+- Link: https://drive.google.com/file/d/1U6Dv4jB5SNWCUGWhxMLbb_EImXZVugbE/view?usp=sharing
 ## Requirement
 - Truffle
 - Ganache 
