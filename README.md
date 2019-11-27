@@ -13,7 +13,7 @@ This is a PoC Smart contract system of Decentralized Twitter Application, based 
 - Quick start Ganache on port 8545
 - Run from terminal: truffle test
 ##
-You will se the following output of test as below, its show step by step how this system work:
+You will see the following output of test as below, its show step by step how this system work:
 Identity Registry Services
 -  STEP 1: Deploy Twitter Issuer Identity 
 -  STEP 2: Twitter Issuer Add Signer Key - The key to sign Claim for User 
