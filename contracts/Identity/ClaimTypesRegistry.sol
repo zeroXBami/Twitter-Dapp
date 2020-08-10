@@ -1,6 +1,6 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.6.0;
 
-import "openzeppelin-solidity/contracts/ownership/Ownable.sol";
+import "openzeppelin-solidity/contracts/access/Ownable.sol";
 
 
 contract ClaimTypesRegistry is Ownable {
@@ -9,11 +9,6 @@ contract ClaimTypesRegistry is Ownable {
     event claimTypeAdded(uint256 indexed claimType);
     event claimTypeRemoved(uint256 indexed claimType);
 
-    /**
-    * @dev Add a trusted claim type (For example: KYC=1, AML=2).
-    * Only owner can call.
-    * @param claimType The uint256 of claim type
-    */
     function addClaimType(uint256 claimType) public onlyOwner {
         uint length = claimTypes.length;
         for (uint i = 0; i < length; i++) {
@@ -23,11 +18,6 @@ contract ClaimTypesRegistry is Ownable {
         emit claimTypeAdded(claimType);
     }
 
-    /**
-    * @dev Remove a trusted claim type (For example: KYC=1, AML=2).
-    * Only owner can call.
-    * @param claimType The uint256 of claim type
-    */
     function removeClaimType(uint256 claimType) public onlyOwner {
         uint length = claimTypes.length;
         for (uint i = 0; i < length; i++) {
@@ -42,10 +32,6 @@ contract ClaimTypesRegistry is Ownable {
         }
     }
 
-    /**
-    * @dev Get the trusted claim types for the identity services
-    * @return Array of trusted claim types
-    */
     function getClaimTypes() public view  returns (uint256[] memory) {
         return claimTypes;
     }

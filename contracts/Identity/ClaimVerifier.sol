@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.6.0;
 
 import "./ClaimHolder.sol";
 import "./TrustedIssuersRegistry.sol";
@@ -12,15 +12,9 @@ contract ClaimVerifier{
     event ClaimValid(ClaimHolder _identity, uint256 claimType);
     event ClaimInvalid(ClaimHolder _identity, uint256 claimType);
 
-    /**
-    * @dev Check valid or invalid of given claim by ClaimHolder
-    * @param _identity ClaimHolder contract address
-    * @param claimType type of given claim by ClaimHolder
-    * @return true or false
-    */
     function claimIsValid(ClaimHolder _identity, uint256 claimType)
     public
-    constant
+    view
     returns (bool claimValid)
     {
         uint256 foundClaimType;
@@ -58,12 +52,6 @@ contract ClaimVerifier{
         return false;
     }
 
-    /**
-    * @dev Get address of signed data
-    * @param sig signed data in bytes32
-    * @param dataHash hash of data in bytes32
-    * @return address of signed data
-    */
 
     function getRecoveredAddress(bytes sig, bytes32 dataHash)
         public

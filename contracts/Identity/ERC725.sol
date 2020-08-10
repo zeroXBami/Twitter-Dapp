@@ -1,4 +1,4 @@
-pragma solidity ^0.4.24;
+pragma solidity ^0.6.0;
 
 contract ERC725 {
 
@@ -19,10 +19,10 @@ contract ERC725 {
         bytes32 key;
     }
 
-    function getKey(bytes32 _key) public constant returns(uint256 purpose, uint256 keyType, bytes32 key);
-    function getKeyPurpose(bytes32 _key) public constant returns(uint256 purpose);
-    function getKeysByPurpose(uint256 _purpose) public constant returns(bytes32[] keys);
+    function getKey(bytes32 _key) public view returns(uint256 purpose, uint256 keyType, bytes32 key);
+    function getKeyPurpose(bytes32 _key) public view returns(uint256 purpose);
+    function getKeysByPurpose(uint256 _purpose) public view returns(bytes32[] memory keys);
     function addKey(bytes32 _key, uint256 _purpose, uint256 _keyType) public returns (bool success);
-    function execute(address _to, uint256 _value, bytes _data) public payable returns (uint256 executionId);
+    function execute(address _to, uint256 _value, bytes memory _data) public payable returns (uint256 executionId);
     function approve(uint256 _id, bool _approve) public returns (bool success);
 }
