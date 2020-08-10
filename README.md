@@ -14,6 +14,7 @@ This is a PoC Smart contract system of Decentralized Twitter Application, based 
 
 ## Run
 - Quick start Ganache on port 8545
+- Get private key of ```account[4]``` (account with index number 4 in accounts tab ) and change paste to ```privateKey_signer``` in *test/DecentralizedTwitter.test.js*
 - Run from terminal: truffle test
 ##
 You will see the following output of test as below, its show step by step how this system work:

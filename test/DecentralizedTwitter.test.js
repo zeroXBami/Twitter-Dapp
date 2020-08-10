@@ -20,7 +20,7 @@ contract('IdentityRegistry', function (accounts) {
     let addrZero = constants.ZERO_ADDRESS;
     let issuer_EOA = accounts[0];
     let signer_key = web3.utils.keccak256(accounts[4]);
-    const privateKey_signer = '0xd84ba674356480b86ffb78e21bc57ee59e3e108dca5c97e0c77041506be45696' // this is private key of accounts[4]
+    const privateKey_signer = '---Change this to private key of accounts[4]---' // this is private key of accounts[4]
     let user1_EOA = accounts[1];
     let user2_EOA = accounts[2];
     let services_EOA = accounts[3];
@@ -102,6 +102,7 @@ contract('IdentityRegistry', function (accounts) {
             const registerData_user1 = getEncodedCall(identityRegistry, 'registerIdentity', [user1_Identity.address]);
             await  user1_Identity.execute(identityRegistry.address, 0, registerData_user1, { from: user1_EOA});
             const res = await identityRegistry.identity.call(user1_Identity.address); // 0 is id of user1_Identity on identityRegistry
+            console.log("xxxxx ress", res)
             assert.equal(res, true)
         });
 
