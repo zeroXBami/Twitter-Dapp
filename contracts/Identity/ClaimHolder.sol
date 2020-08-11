@@ -64,7 +64,7 @@ contract ClaimHolder is KeyHolder, ERC735 {
             claims[_claimId].uri
         );
 
-        bytes32[] claimList = claimsByType[claims[_claimId].claimType];
+        bytes32[] memory claimList = claimsByType[claims[_claimId].claimType];
 
         for(uint i = 0; i<claimList.length; i++) {
             if(claimList[i] == _claimId) {
@@ -87,9 +87,9 @@ contract ClaimHolder is KeyHolder, ERC735 {
             uint256 claimType,
             uint256 scheme,
             address issuer,
-            bytes signature,
-            bytes data,
-            string uri
+            bytes memory signature,
+            bytes memory data,
+            string memory uri
         )
     {
         return (
@@ -104,8 +104,8 @@ contract ClaimHolder is KeyHolder, ERC735 {
 
     function getClaimIdsByType(uint256 _claimType)
         public 
-view
-        returns(bytes32[] claimIds)
+        view
+        returns(bytes32[] memory claimIds)
     {
         return claimsByType[_claimType];
     }
