@@ -17,12 +17,13 @@ contract ClaimHolder is KeyHolder, ERC735 {
         string memory _uri
     )
         public
+        override
         returns (bytes32 claimRequestId)
     {
-        bytes32 claimId = keccak256(_issuer, _claimType);
+        bytes32 claimId = keccak256(abi.encodePacked(_issuer, _claimType));
 
         if (msg.sender != address(this)) {
-            require(keyHasPurpose(keccak256(msg.sender), 3), "Sender does not have claim signer key");
+            require(keyHasPurpose(keccak256(abi.encodePacked(msg.sender)), 3), "Sender does not have claim signer key");
         }
 
         if (claims[claimId].issuer != _issuer) {
@@ -49,9 +50,9 @@ contract ClaimHolder is KeyHolder, ERC735 {
         return claimId;
     }
 
-    function removeClaim(bytes32 _claimId) public returns (bool success) {
+    function removeClaim(bytes32 _claimId) public override returns (bool success) {
         if (msg.sender != address(this)) {
-            require(keyHasPurpose(keccak256(msg.sender), 1), "Sender does not have management key");
+            require(keyHasPurpose(keccak256(abi.encodePacked(msg.sender)), 1), "Sender does not have management key");
         }
 
         emit ClaimRemoved(
@@ -64,13 +65,12 @@ contract ClaimHolder is KeyHolder, ERC735 {
             claims[_claimId].uri
         );
 
-        bytes32[] memory claimList = claimsByType[claims[_claimId].claimType];
+        bytes32[] storage claimList = claimsByType[claims[_claimId].claimType];
 
         for(uint i = 0; i<claimList.length; i++) {
             if(claimList[i] == _claimId) {
-                delete claimList[i];
-                claimList[i] = claimList[claimList.length-1];
-                claimList.length--;
+                ( claimList[i], claimList[claimList.length-1] ) = (claimList[claimList.length-1], claimList[i]);
+                claimList.pop();
             }
         }
 
@@ -82,6 +82,7 @@ contract ClaimHolder is KeyHolder, ERC735 {
 
     function getClaim(bytes32 _claimId)
         public 
+        override
         view
         returns(
             uint256 claimType,
@@ -104,6 +105,7 @@ contract ClaimHolder is KeyHolder, ERC735 {
 
     function getClaimIdsByType(uint256 _claimType)
         public 
+        override
         view
         returns(bytes32[] memory claimIds)
     {

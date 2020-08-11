@@ -14,7 +14,6 @@ contract ClaimVerifier{
 
     function claimIsValid(ClaimHolder _identity, uint256 claimType)
     public
-    view
     returns (bool claimValid)
     {
         uint256 foundClaimType;
@@ -28,19 +27,19 @@ contract ClaimVerifier{
         for(uint i = 0; i<issuerIndexes.length; i++) {
             trustedClaimHolder = issuersRegistry.getTrustedIssuer(issuerIndexes[i]);
             // Construct claimId (identifier + claim type)
-            bytes32 claimId = keccak256(trustedClaimHolder, claimType);
+            bytes32 claimId = keccak256(abi.encodePacked(trustedClaimHolder, claimType));
 
             // Fetch claim from user
             ( foundClaimType, scheme, issuer, sig, data, ) = _identity.getClaim(claimId);
 
-            bytes32 dataHash = keccak256(_identity, claimType, data);
-            bytes32 prefixedHash = keccak256("\x19Ethereum Signed Message:\n32", dataHash);
+            bytes32 dataHash = keccak256(abi.encodePacked(_identity, claimType, data));
+            bytes32 prefixedHash = keccak256(abi.encodePacked("\x19Ethereum Signed Message:\n32", dataHash));
 
             // Recover address of data signer
             address recovered = getRecoveredAddress(sig, prefixedHash);
 
             // Take hash of recovered address
-            bytes32 hashedAddr = keccak256(recovered);
+            bytes32 hashedAddr = keccak256(abi.encodePacked(recovered));
 
             // Does the trusted identifier have they key which signed the user's claim?
             if(trustedClaimHolder.keyHasPurpose(hashedAddr, 3)) {
@@ -56,7 +55,7 @@ contract ClaimVerifier{
     function getRecoveredAddress(bytes memory sig, bytes32 dataHash)
         public
         view
-        returns (address addr)
+        returns (address)
     {
         bytes32 ra;
         bytes32 sa;
@@ -64,7 +63,7 @@ contract ClaimVerifier{
 
         // Check the signature length
         if (sig.length != 65) {
-            return (0);
+            return address(0);
         }
 
         // Divide the signature in r, s and v variables

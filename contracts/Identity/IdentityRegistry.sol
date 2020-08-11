@@ -21,7 +21,7 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
     event TrustedIssuersRegistrySet(address indexed _trustedIssuersRegistry);
  
     modifier isValidIdentity(ClaimHolder _identityContract) {
-        require(_identityContract != address(0), "contract address can't be a zero address");
+        require(address(_identityContract) != address(0), "contract address can't be a zero address");
         require(checkValidIdentity(_identityContract),  "Your Claim is not valid for KYC");
         _;
     }
@@ -35,17 +35,17 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
 
 
     function registerIdentity(ClaimHolder _identity) isValidIdentity(_identity) public returns (bool) {
-        require(identity[_identity] == false);
-        identity[_identity] = true;
+        require(identity[address(_identity)] == false);
+        identity[address(_identity)] = true;
         emit IdentityRegistered(_identity, now);
         return true;
     }
 
 
     function removeIdentity(ClaimHolder _identity) onlyOwner public returns (bool) {
-        require(identity[_identity] == true);
+        require(identity[address(_identity)] == true);
         emit IdentityRemoved(_identity, now);
-        delete identity[_identity];
+        delete identity[address(_identity)];
         return true;
     }
 
@@ -72,7 +72,7 @@ contract IdentityRegistry is Ownable, ClaimVerifier {
         return false;
     }
 
-    function isValidUser(ClaimHolder _identity) public returns (bool){
-        return identity[_identity];
+    function isValidUser(ClaimHolder _identity) public view returns (bool){
+        return identity[address(_identity)];
     }
 } 

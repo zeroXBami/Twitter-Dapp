@@ -20,7 +20,7 @@ contract('IdentityRegistry', function (accounts) {
     let addrZero = constants.ZERO_ADDRESS;
     let issuer_EOA = accounts[0];
     let signer_key = web3.utils.keccak256(accounts[4]);
-    const privateKey_signer = '---Change this to private key of accounts[4]---' // this is private key of accounts[4]
+    const privateKey_signer = '0xecabd874be8848cdc151e8ad3cfb57f4e01bd592b743a2fafe66a1f5fa2fda80' // this is private key of accounts[4]
     let user1_EOA = accounts[1];
     let user2_EOA = accounts[2];
     let services_EOA = accounts[3];

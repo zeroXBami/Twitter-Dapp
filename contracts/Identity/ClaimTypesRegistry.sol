@@ -22,10 +22,7 @@ contract ClaimTypesRegistry is Ownable {
         uint length = claimTypes.length;
         for (uint i = 0; i < length; i++) {
             if (claimTypes[i] == claimType) {
-                delete claimTypes[i];
-                claimTypes[i] = claimTypes[length - 1];
-                delete claimTypes[length - 1];
-                claimTypes.length--;
+                (claimTypes[i], claimTypes[length - 1]) = (claimTypes[length - 1], claimTypes[i]);
                 emit claimTypeRemoved(claimType);
                 return;
             }

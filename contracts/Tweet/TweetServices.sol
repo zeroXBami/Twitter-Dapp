@@ -41,7 +41,7 @@ contract TweetServices is Ownable, ERC20 {
     }
     
     
-    constructor(address _identityRegistry) public {
+    constructor(address _identityRegistry) ERC20("TwitterToken", "TWT") public {
         identityRegistry = IdentityRegistry(_identityRegistry);
     }
    
